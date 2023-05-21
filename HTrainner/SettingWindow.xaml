@@ -1,0 +1,61 @@
+﻿<mah:MetroWindow x:Class="HsrAITrainner.SettingWindow"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="설정" Height="370" Width="525" WindowStartupLocation="CenterScreen">
+    <StackPanel Orientation="Vertical">
+        <GroupBox Header="학습 설정" mah:HeaderedControlHelper.HeaderFontSize="16" Margin="10">
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Text="점수" Margin="5,5,50,5" VerticalAlignment="Center"/>
+                <mah:NumericUpDown Minimum="0" Maximum="100" Width="100" Margin="5" Value="{Binding Score}"/>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="학습 예약 설정" mah:HeaderedControlHelper.HeaderFontSize="16" Margin="10">
+            <StackPanel Orientation="Vertical" DataContext="{Binding}">
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <TextBlock Text="시작 시간" Margin="5,5,25,5" VerticalAlignment="Center"/>
+                    <DatePicker Margin="5" Width="120" SelectedDate="{Binding ReserveStartDateTime}" Visibility="{Binding ReserveStartDateVisibility}"/>
+                    <mah:NumericUpDown Minimum="0" Maximum="23" Margin="5" Width="100" Value="{Binding ReserveStartHour}"/>
+                    <TextBlock Text="시" Margin="5" VerticalAlignment="Center"/>
+                    <mah:NumericUpDown Minimum="0" Margin="5" Maximum="59" Width="100" Value="{Binding ReserveStartMinute}"/>
+                    <TextBlock Text="분" Margin="5" VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <TextBlock Text="종료 시간" Margin="5,5,25,5" VerticalAlignment="Center"/>
+                    <DatePicker Margin="5" Width="120" SelectedDate="{Binding ReserveEndDateTime}" Visibility="{Binding ReserveEndDateVisibility}"/>
+                    <mah:NumericUpDown Minimum="0" Maximum="23" Margin="5" Width="100" Value="{Binding ReserveEndHour}"/>
+                    <TextBlock Text="시" Margin="5" VerticalAlignment="Center"/>
+                    <mah:NumericUpDown Minimum="0" Margin="5" Maximum="59" Width="100" Value="{Binding ReserveEndMinute}"/>
+                    <TextBlock Text="분" Margin="5" VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox Content="예약 종료 기능 사용 여부" IsChecked="{Binding EnableReserveEnd}" Margin="5"/>
+                    <CheckBox Content="날짜 사용 여부" IsChecked="{Binding EnableReserveDate}" Margin="5"/>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5">
+            <Button Width="100" Height="30" Margin="5">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:CallMethodAction TargetObject="{Binding}" MethodName="ConfirmBtn_Click"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <TextBlock Text="확인"/>
+            </Button>
+            <Button Width="100" Height="30" Margin="5">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:CallMethodAction TargetObject="{Binding}" MethodName="CancelBtn_Click"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <TextBlock Text="취소"/>
+            </Button>
+        </StackPanel>
+    </StackPanel>
+</mah:MetroWindow>

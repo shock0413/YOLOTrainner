@@ -1,0 +1,566 @@
+﻿<mah:MetroWindow
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:local="clr-namespace:HsrAITrainner"
+        xmlns:HanseroDisplay="clr-namespace:HanseroDisplay;assembly=HanseroDisplay"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        x:Class="HsrAITrainner.MainWindow"
+        mc:Ignorable="d"
+        Icon="small_Icon.ico" Title="학습 프로그램" TitleCharacterCasing="Normal" Height="1080" Width="1920" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp" Closing="Window_Closing" Focusable="True">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="SizeChanged">
+            <i:CallMethodAction TargetObject="{Binding}" MethodName="Window_SizeChanged"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <mah:MetroWindow.RightWindowCommands>
+        <mah:WindowCommands>
+            <Button ToolTip="프로젝트 저장" Focusable="False">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:CallMethodAction TargetObject="{Binding}" MethodName="Button_Click_5"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:PackIconCodicons Kind="Save" VerticalAlignment="Center" Margin="5" Foreground="White"/>
+                    <TextBlock Text="프로젝트 저장" VerticalAlignment="Center" Margin="5" Foreground="White"/>
+                </StackPanel>
+            </Button>
+            <Button ToolTip="프로젝트 백업" Focusable="False">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:CallMethodAction TargetObject="{Binding}" MethodName="BackUpBtn_Click"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:PackIconMaterialDesign Kind="Backup" VerticalAlignment="Center" Margin="5" Foreground="White"/>
+                    <TextBlock Text="프로젝트 백업" VerticalAlignment="Center" Margin="5" Foreground="White"/>
+                </StackPanel>
+            </Button>
+            <Button ToolTip="프로젝트 롤백" Focusable="False">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:CallMethodAction TargetObject="{Binding}" MethodName="RollbackBtn_Click"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:PackIconTypicons Kind="ArrowBackOutline" VerticalAlignment="Center" Margin="5" Foreground="White"/>
+                    <TextBlock Text="프로젝트 롤백" VerticalAlignment="Center" Margin="5" Foreground="White"/>
+                </StackPanel>
+            </Button>
+            <Button ToolTip="설정" Focusable="False">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:CallMethodAction TargetObject="{Binding}" MethodName="WindowSettingCommand_Click"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:PackIconUnicons Kind="Setting" VerticalAlignment="Center" Margin="5" Foreground="White"/>
+                    <TextBlock Text="설정" VerticalAlignment="Center" Margin="5" Foreground="White"/>
+                </StackPanel>
+            </Button>
+        </mah:WindowCommands>
+    </mah:MetroWindow.RightWindowCommands>
+    <Grid Margin="0,0,2,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="70*"/>
+        </Grid.ColumnDefinitions>
+        <Expander IsExpanded="False" ExpandDirection="Right" Grid.RowSpan="4">
+            <Expander.Header>
+                <TextBlock Text="파라미터 설정" FontSize="14" VerticalAlignment="Top" Margin="0,5,0,0">
+                    <TextBlock.LayoutTransform>
+                        <RotateTransform Angle="270"/>
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+            </Expander.Header>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="batch" Margin="5" Width="100"/>
+                    <mah:NumericUpDown VerticalAlignment="Center" Width="100" Interval="1" Margin="5" Value="{Binding NetBatch}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="subdivisions" Margin="5" Width="100"/>
+                    <mah:NumericUpDown VerticalAlignment="Center" Width="100" Interval="1" Margin="5" Value="{Binding NetSubdivisions}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="2" Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="size" Margin="5" Width="100"/>
+                    <ComboBox VerticalAlignment="Center" Width="100" Margin="5" Text="{Binding NetSize}">
+                        <ComboBoxItem Content="320x320"/>
+                        <ComboBoxItem Content="416x416"/>
+                        <ComboBoxItem Content="480x480"/>
+                        <ComboBoxItem Content="512x512"/>
+                        <ComboBoxItem Content="544x544"/>
+                        <ComboBoxItem Content="608x608"/>
+                        <ComboBoxItem Content="672x672"/>
+                        <ComboBoxItem Content="736x736"/>
+                        <ComboBoxItem Content="800x800"/>
+                        <ComboBoxItem Content="864x864"/>
+                        <ComboBoxItem Content="928x928"/>
+                        <ComboBoxItem Content="992x992"/>
+                        <ComboBoxItem Content="1056x1056"/>
+                        <ComboBoxItem Content="1088x1088"/>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Grid.Row="3" Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="channels" Margin="5" Width="100"/>
+                    <ComboBox VerticalAlignment="Center" Width="100" Margin="5" Text="{Binding NetChannels}">
+                        <ComboBoxItem Content="1"/>
+                        <ComboBoxItem Content="3"/>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Grid.Row="4" Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="momentum" Margin="5" Width="100"/>
+                    <mah:NumericUpDown VerticalAlignment="Center" Width="100" Interval="0.001" Margin="5" Value="{Binding NetMomentum}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="5" Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="decay" Margin="5" Width="100"/>
+                    <mah:NumericUpDown VerticalAlignment="Center" Width="100" Interval="0.0005" Margin="5" Value="{Binding NetDecay}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="6" Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="angle" Margin="5" Width="100"/>
+                    <mah:NumericUpDown VerticalAlignment="Center" Width="100" Interval="1" Margin="5" Value="{Binding NetAngle}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="7" Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="saturation" Margin="5" Width="100"/>
+                    <mah:NumericUpDown VerticalAlignment="Center" Width="100" Interval="0.1" Margin="5" Value="{Binding NetSaturation}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="8" Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="exposure" Margin="5" Width="100"/>
+                    <mah:NumericUpDown VerticalAlignment="Center" Width="100" Interval="0.1" Margin="5" Value="{Binding NetExposure}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="9" Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="hue" Margin="5" Width="100"/>
+                    <mah:NumericUpDown VerticalAlignment="Center" Width="100" Interval="0.1" Margin="5" Value="{Binding NetHue}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="10" Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="learning_rate" Margin="5" Width="100"/>
+                    <mah:NumericUpDown VerticalAlignment="Center" Width="100" Interval="0.001" Margin="5" Value="{Binding NetLearningRate}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="11" Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="burn_in" Margin="5" Width="100"/>
+                    <mah:NumericUpDown VerticalAlignment="Center" Width="100" Interval="10" Margin="5" Value="{Binding NetBurnIn}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="12" Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="max batches" Margin="5" Width="100"/>
+                    <mah:NumericUpDown VerticalAlignment="Center" Width="100" Interval="100" Margin="5" Value="{Binding NetMaxBatches}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="13" Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="steps" Margin="5" Width="100"/>
+                    <TextBox VerticalAlignment="Center" Width="100" Margin="5" Text="{Binding NetSteps}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="14" Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="scales" Margin="5" Width="100"/>
+                    <TextBox VerticalAlignment="Center" Width="100" Margin="5" Text="{Binding NetScales}"/>
+                </StackPanel>
+            </Grid>
+        </Expander>
+        <GroupBox Margin="10" Header="디스플레이" mah:HeaderedControlHelper.HeaderFontSize="16" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="4" >
+            <HanseroDisplay:HDisplay Name="dp" KeyDown="dp_KeyDown" KeyUp="dp_KeyUp" MouseLeftButtonDown="Dp_LeftMouseDown" MouseLeftButtonUp="Dp_LeftMouseUp" MouseMove="Dp_MouseMove" MouseLeave="Dp_MouseLeave" Confirmed="{Binding Path=ConfirmCommand}" Deleted="{Binding Path=DeleteCommand}" Canceled="{Binding Path=CancelCommand}" Saved="{Binding Path=SaveCommand}" Loaded="Dp_Loaded" Focusable="True" SaveBtnVisibility="{Binding SaveBtnVisibility}"/>
+        </GroupBox>
+        <Grid Grid.Column="4" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="1.9*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <GroupBox Header="이미지 리스트" mah:HeaderedControlHelper.HeaderFontSize="16" Grid.Row="0" Grid.Column="4" Margin="5">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Orientation="Vertical">
+                        <!-- <CheckBox Name="ch_IsFullROI" Content="Full ROI" Grid.Column="5" HorizontalAlignment="Left" Margin="114.439,10,0,0" Visibility="Hidden" Grid.Row="1" VerticalAlignment="Top" IsChecked="True"/> -->
+                        <DockPanel Grid.Column="4" Grid.Row="0" Margin="5">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="5*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <ComboBox Grid.Column="0" Focusable="False" Name="cb_ImageListMode" HorizontalAlignment="Stretch" Height="27" SelectedIndex="0" ToolTip="필터" SelectionChanged="ComboBox_SelectionChanged">
+                                    <ComboBoxItem Content="All"/>
+                                    <ComboBoxItem Content="Labeled"/>
+                                    <ComboBoxItem Content="Not Labeled"/>
+                                    <ComboBoxItem Content="Trained"/>
+                                    <!-- <ComboBoxItem Content="Finded"/> -->
+                                    <!-- <ComboBoxItem Content="Miss Match"/> -->
+                                </ComboBox>
+                                <Label ToolTip="이미지 수" Name="Image_Count" Content="0/0" Grid.Column="1" HorizontalAlignment="Right" Height="27" VerticalAlignment="Top"/>
+                            </Grid>
+                        </DockPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="347*"/>
+                                <ColumnDefinition Width="126*"/>
+                                <ColumnDefinition Width="95*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Name="Filter" Height="27" Focusable="False" Margin="5" ToolTip="검색창" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Grid.ColumnSpan="2">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="KeyUp">
+                                        <i:CallMethodAction TargetObject="{Binding}" MethodName="Search_KeyUp"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+                            <Button Grid.Column="2" Content="검 색" Focusable="False" VerticalContentAlignment="Center" Height="27" VerticalAlignment="Center" Margin="5" Click="Button_Click_6"/>
+                        </Grid>
+                        <StackPanel Orientation="Vertical">
+                            <Border BorderThickness="1" BorderBrush="White" Margin="5">
+                                <StackPanel Orientation="Vertical">
+                                    <DockPanel LastChildFill="False" Margin="2">
+                                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+                                            <Button ToolTip="이미지 추가" Focusable="False" VerticalAlignment="Center" Margin="2">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="Click">
+                                                        <i:CallMethodAction TargetObject="{Binding}" MethodName="AddImageList_Click"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <iconPacks:PackIconModern Kind="Add" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                                                    <TextBlock Text="Add" Margin="2" VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                            </Button>
+                                            <Button ToolTip="Import" Focusable="False" VerticalAlignment="Center" Margin="2">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="Click">
+                                                        <i:CallMethodAction TargetObject="{Binding}" MethodName="ImportBtn_Click"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <iconPacks:PackIconMaterial Kind="Import" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                                                    <TextBlock Text="Import" Margin="2" VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                            </Button>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                                            <Button ToolTip="프리뷰모드" Focusable="False" Margin="2">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="Click">
+                                                        <i:CallMethodAction TargetObject="{Binding}" MethodName="PreviewModeBtn_Click"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                                <iconPacks:PackIconCodicons Kind="Preview"/>
+                                            </Button>
+                                            <Button ToolTip="리스트뷰모드" Focusable="False" Margin="2">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="Click">
+                                                        <i:CallMethodAction TargetObject="{Binding}" MethodName="ListViewModeBtn_Click"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                                <iconPacks:PackIconPixelartIcons Kind="List"/>
+                                            </Button>
+                                        </StackPanel>
+                                    </DockPanel>
+                                    <DataGrid Name="dgImageList" ItemsSource="{Binding PartImageInfoList}" Focusable="True" Height="240" AutoGenerateColumns="False" AllowDrop="True" Visibility="{Binding ListviewModeVisibility}" IsReadOnly="True" CanUserAddRows="False">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="PreviewMouseDown">
+                                                <i:CallMethodAction TargetObject="{Binding}" MethodName="dgImageList_PreviewMouseDown"/>
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewKeyDown">
+                                                <i:CallMethodAction TargetObject="{Binding}" MethodName="dgImageList_PreviewKeyDown"/>
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="SelectionChanged">
+                                                <i:CallMethodAction TargetObject="{Binding}" MethodName="dgImageList_SelectionChanged"/>
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="Loaded">
+                                                <i:CallMethodAction TargetObject="{Binding}" MethodName="dgImageList_Loaded"/>
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="Drop">
+                                                <i:CallMethodAction TargetObject="{Binding}" MethodName="dgImageList_Drop"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="파일 이름" Width="200" Binding="{Binding FileName}"/>
+                                            <DataGridTextColumn Header="너비" Width="50" Binding="{Binding Width}"/>
+                                            <DataGridTextColumn Header="높이" Width="50" Binding="{Binding Height}"/>
+                                            <DataGridTextColumn Header="라벨 수" Width="50" Binding="{Binding CharList.Count}"/>
+                                            <DataGridTextColumn Header="파일 추가 시간" Width="200" Binding="{Binding DateTime}"/>
+                                        </DataGrid.Columns>
+                                        <DataGrid.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem Header="삭제">
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="Click">
+                                                            <i:CallMethodAction TargetObject="{Binding}" MethodName="dgImageList_DeleteButtonClick"/>
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                </MenuItem>
+                                            </ContextMenu>
+                                        </DataGrid.ContextMenu>
+                                    </DataGrid>
+                                    <ListBox GotFocus="lbImageList_GotFocus" SelectionChanged="LbImageList_SelectionChanged" KeyDown="lbImageList_KeyDown" Drop="ImageList_Drop" ScrollViewer.CanContentScroll="False" Height="240" ItemsSource="{Binding PartImageInfoList}" Name="lbImageList" SelectionMode="Extended" AllowDrop="True" Focusable="False" IsSynchronizedWithCurrentItem="True" Visibility="{Binding PreviewModeVisibility}">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Keyboard.GotKeyboardFocus">
+                                                <i:CallMethodAction TargetObject="{Binding}" MethodName="lbImageList_GotKeyboardFocus"/>
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="ScrollViewer.ScrollChanged">
+                                                <i:CallMethodAction TargetObject="{Binding}" MethodName="ImageList_ScrollChanged"/>
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="Loaded">
+                                                <i:CallMethodAction TargetObject="{Binding}" MethodName="lbImageList_Loaded"/>
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                                <i:CallMethodAction TargetObject="{Binding}" MethodName="lbImageList_MouseLeftButtonDown"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="1*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top" BorderBrush="Gray" BorderThickness="1"/>
+                                                    <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom" BorderBrush="Gray" BorderThickness="1"/>
+                                                    <Border Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" BorderBrush="Gray" BorderThickness="1"/>
+                                                    <Border Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" BorderBrush="Gray" BorderThickness="1"/>
+                                                    <Border Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" BorderBrush="Gray" BorderThickness="1"/>
+                                                    <Image Grid.Column="0" Name="lbImage" Height="160" Stretch="Fill" Width="240" HorizontalAlignment="Left" Focusable="False" Margin="5">
+                                                        <i:Interaction.Triggers>
+                                                            <i:EventTrigger EventName="GotFocus">
+                                                                <i:CallMethodAction TargetObject="{Binding}" MethodName="lbImage_GotFocus"/>
+                                                            </i:EventTrigger>
+                                                            <i:EventTrigger EventName="KeyDown">
+                                                                <i:CallMethodAction TargetObject="{Binding}" MethodName="lbImage_KeyDown"/>
+                                                            </i:EventTrigger>
+                                                            <i:EventTrigger EventName="GotKeyboardFocus">
+                                                                <i:CallMethodAction TargetObject="{Binding}" MethodName="lbImage_GotKeyboardFocus"/>
+                                                            </i:EventTrigger>
+                                                        </i:Interaction.Triggers>
+                                                        <Image.Source>
+                                                            <BitmapImage UriSource="{Binding FileName}" CacheOption="OnLoad" DecodePixelWidth="160" DecodePixelHeight="120"/>
+                                                        </Image.Source>
+                                                    </Image>
+                                                    <StackPanel Grid.Column="1" Orientation="Vertical" Margin="10">
+                                                        <Grid>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="1*"/>
+                                                                <RowDefinition Height="1*"/>
+                                                                <RowDefinition Height="1*"/>
+                                                                <RowDefinition Height="1*"/>
+                                                                <RowDefinition Height="1*"/>
+                                                            </Grid.RowDefinitions>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto"/>
+                                                                <ColumnDefinition Width="2*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Border Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Top" BorderBrush="White" BorderThickness="1"/>
+                                                            <Border Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" HorizontalAlignment="Left" BorderBrush="White" BorderThickness="1"/>
+                                                            <Border Grid.Row="0" Grid.RowSpan="5" Grid.Column="1" HorizontalAlignment="Right" BorderBrush="White" BorderThickness="1"/>
+                                                            <Border Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" HorizontalAlignment="Right" BorderBrush="White" BorderThickness="1"/>
+                                                            <Border Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom" BorderBrush="White" BorderThickness="1"/>
+                                                            <TextBlock Grid.Row="0" Grid.Column="0" Text="파일 이름" Margin="5"/>
+                                                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding FileName}" Margin="5"/>
+                                                            <Border Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" BorderBrush="White" BorderThickness="1"/>
+                                                            <TextBlock Grid.Row="1" Grid.Column="0" Text="너비" Margin="5"/>
+                                                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Width}" Margin="5"/>
+                                                            <Border Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Bottom" BorderBrush="White" BorderThickness="1"/>
+                                                            <TextBlock Grid.Row="2" Grid.Column="0" Text="높이" Margin="5"/>
+                                                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Height}" Margin="5"/>
+                                                            <Border Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Bottom" BorderBrush="White" BorderThickness="1"/>
+                                                            <TextBlock Grid.Row="3" Grid.Column="0" Text="라벨 수" Margin="5"/>
+                                                            <TextBlock Name="CharList_Count" Grid.Row="3" Grid.Column="1" Text="{Binding CharList.Count}" Margin="5"/>
+                                                            <Border Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Bottom" BorderBrush="White" BorderThickness="1"/>
+                                                            <TextBlock Grid.Row="4" Grid.Column="0" Text="파일 추가 시간" Margin="5"/>
+                                                            <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding DateTime}" Margin="5"/>
+                                                        </Grid>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                        <ListBox.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem Header="삭제">
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="Click">
+                                                            <i:CallMethodAction TargetObject="{Binding}" MethodName="ListBox_DeleteButtonClick"/>
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                </MenuItem>
+                                            </ContextMenu>
+                                        </ListBox.ContextMenu>
+                                    </ListBox>
+                                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Loaded">
+                                                    <i:CallMethodAction TargetObject="{Binding}" MethodName="PageStack_Loaded"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                            <Button Margin="5" Width="30" Height="30" Focusable="False">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="Click">
+                                                        <i:CallMethodAction TargetObject="{Binding}" MethodName="FirstPageBtn_Click"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                                <iconPacks:PackIconForkAwesome Kind="AngleDoubleLeft"/>
+                                            </Button>
+                                            <Button Margin="5" Width="30" Height="30" Focusable="False">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="Click">
+                                                        <i:CallMethodAction TargetObject="{Binding}" MethodName="PrePageBtn_Click"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                                <iconPacks:PackIconForkAwesome Kind="AngleLeft"/>
+                                            </Button>
+                                            <Button Margin="5" Width="30" Height="30" Focusable="False">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="Click">
+                                                        <i:CallMethodAction TargetObject="{Binding}" MethodName="NextPageBtn_Click"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                                <iconPacks:PackIconForkAwesome Kind="AngleRight"/>
+                                            </Button>
+                                            <Button Margin="5" Width="30" Height="30" Focusable="False">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="Click">
+                                                        <i:CallMethodAction TargetObject="{Binding}" MethodName="LastPageBtn_Click"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                                <iconPacks:PackIconForkAwesome Kind="AngleDoubleRight"/>
+                                            </Button>
+                                        </StackPanel>
+                                    </ScrollViewer>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+                                        <mah:NumericUpDown Width="100" Height="31" FontSize="16" TextAlignment="Center" Margin="5" Value="{Binding SelectedPage}"/>
+                                        <TextBlock Text="/" VerticalAlignment="Center" FontSize="16" Margin="5"/>
+                                        <TextBlock Text="{Binding LimitPage}" VerticalAlignment="Center" FontSize="16" Margin="5"/>
+                                        <Button Width="50" Margin="5" ToolTip="이동" Focusable="False">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Click">
+                                                    <i:CallMethodAction TargetObject="{Binding}" MethodName="SelectedPageMoveBtn_Click"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                            <TextBlock Text="이동"/>
+                                        </Button>
+                                        <Button Width="50" Margin="5" ToolTip="새로고침" Focusable="False">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Click">
+                                                    <i:CallMethodAction TargetObject="{Binding}" MethodName="RefreshBtn_Click"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                            <iconPacks:PackIconMaterialLight Kind="Refresh" VerticalAlignment="Center" Margin="5" Foreground="White"/>
+                                        </Button>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                            <StackPanel Orientation="Horizontal">
+                                <Button ToolTip="자동 라벨링" VerticalAlignment="Center" Height="38" Width="80" Margin="5" Click="SelectImageDetectButton_Click" Focusable="False">
+                                    <TextBlock Text="자동 라벨링"/>
+                                </Button>
+                                <Button ToolTip="전체 검증" Height="38" VerticalAlignment="Center" Width="80" Margin="5" Focusable="False">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:CallMethodAction TargetObject="{Binding}" MethodName="AllImageDetectButton_Click"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <Grid>
+                                        <iconPacks:PackIconFontAwesome Kind="SpinnerSolid" RotationAngle="360" Spin="True" SpinDuration="2" Visibility="{Binding AllImageDetectLoading}" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="전체 검증" Visibility="{Binding AllImageDetectText}" Height="16" VerticalAlignment="Top"/>
+                                    </Grid>
+                                </Button>
+                                <Button ToolTip="검증 결과보기" Height="38" VerticalAlignment="Center" Focusable="False" Width="80" Margin="5" IsEnabled="{Binding IsOpenAllImageDetectResultEnabled}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:CallMethodAction TargetObject="{Binding}" MethodName="OpenAllImageDetectResultButton_Click"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <TextBlock Text="검증 결과보기"/>
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </GroupBox>
+            <GroupBox Grid.Row="1" Header="라벨 정보" mah:HeaderedControlHelper.HeaderFontSize="16" Margin="5">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <Border Margin="5" BorderBrush="White" BorderThickness="1">
+                            <DataGrid Name="dg" AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding ResultList}" CellEditEnding="dg_CellEditEnding"  IsReadOnly="True" Height="240" MouseDoubleClick="Dg_MouseDoubleClick" SelectionChanged="dg_SelectionChanged" SelectionMode="Single" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Loaded">
+                                        <i:CallMethodAction TargetObject="{Binding}" MethodName="dg_Loaded"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="라벨명" Binding="{Binding LabelName}"/>
+                                    <DataGridTextColumn Header="라벨 수" Binding="{Binding LabledCount}"/>
+                                    <DataGridTextColumn Header="인식 수" Binding="{Binding FindedCount}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Border>
+                        <StackPanel Orientation="Horizontal">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Loaded">
+                                    <i:CallMethodAction TargetObject="{Binding}" MethodName="FuncStackPanel_Loaded"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <Button Width="80" ToolTip="추가" Height="38" Margin="5" Visibility="Hidden">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:CallMethodAction TargetObject="{Binding}" MethodName="AddLabel_Click"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <TextBlock Text="추가"/>
+                            </Button>
+                            <Button Width="80" ToolTip="삭제" Height="38" Margin="5" Visibility="Hidden">
+                                <TextBlock Text="삭제"/>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </GroupBox>
+            <GroupBox Grid.Row="2" Header="테스트 및 학습" mah:HeaderedControlHelper.HeaderFontSize="16" Margin="5">
+                <StackPanel Orientation="Vertical">
+                    <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Auto">
+                        <StackPanel Orientation="Horizontal">
+                            <Button HorizontalAlignment="Left" ToolTip="학습 데이터 변경" Height="38" VerticalAlignment="Top" Margin="5" Width="90">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:CallMethodAction TargetObject="{Binding}" MethodName="ChangeWeightsFile_Click"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <TextBlock Text="학습 데이터 변경"/>
+                            </Button>
+                            <Button HorizontalAlignment="Left" ToolTip="전체 테스트" Height="38" VerticalAlignment="Top" Margin="5" Width="80" Click="Button_Click_7">
+                                <Grid>
+                                    <iconPacks:PackIconFontAwesome Kind="SpinnerSolid" RotationAngle="360" Spin="True" SpinDuration="2" Visibility="{Binding AllTestLoading}" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="전체 테스트" Visibility="{Binding AllTestText}"/>
+                                </Grid>
+                            </Button>
+                            <Button HorizontalAlignment="Left" ToolTip="전체 테스트 결과 보기" Height="38" VerticalAlignment="Top" Margin="5" Width="120" IsEnabled="{Binding IsOpenAllTestResultEnabled}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:CallMethodAction TargetObject="{Binding}" MethodName="AllTestButton_Click"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <TextBlock Text="전체 테스트 결과 보기"/>
+                            </Button>
+                            <Button Content="한장 테스트" ToolTip="한장 테스트" Grid.Column="1" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Margin="5" Width="80" Click="Button_Click_13"/>
+                            <Button Content="학습" ToolTip="학습" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="80" Margin="5" Click="Button_Click_1"/>
+                        </StackPanel>
+                    </ScrollViewer>
+                </StackPanel>
+            </GroupBox>
+        </Grid>
+    </Grid>
+</mah:MetroWindow>
